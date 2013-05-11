@@ -41,7 +41,7 @@
                 anagrams.Add(new Anagram(word, value));
             }
 
-            return anagrams.OrderByDescending(x => x.Value).Take(maxAnagramCount).ToList();
+            return anagrams.OrderByDescending(x => x.Points).Take(maxAnagramCount).ToList();
         }
     }
 }

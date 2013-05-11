@@ -1,23 +1,21 @@
-﻿namespace Wörds.ConsoleApp
+﻿namespace Wörds.Terminal
 {
     using System;
     using System.Linq;
 
-    internal class Program
+    public class Program
     {
-        static LanguageInfo language;
-
         public static void Main(string[] args)
         {
             Console.WriteLine("==========================================================");
             Console.WriteLine("= Wörds {0}", typeof(Program).Assembly.GetName().Version);
             Console.WriteLine("==========================================================");
+            Console.WriteLine();
 
             try
             {
-                loadLanguage("sv");
-
-                anagramsMode();
+                var language = loadLanguage("sv");
+                anagramsMode(language);
             }
             catch (Exception ex)
             {
@@ -31,7 +29,7 @@
             }
         }
 
-        static void anagramsMode()
+        static void anagramsMode(LanguageInfo language)
         {
             Console.Write("Get top 20 anagrams for: ");
             var input = Console.ReadLine();
@@ -50,23 +48,25 @@
 
                 foreach (var anagram in anagramFinder.GetTopAnagrams(input.ToCharArray(), 20))
                 {
-                    Console.WriteLine("  {0} ({1}p)", anagram.Word, anagram.Value);
+                    Console.WriteLine("  {0} ({1}p)", anagram.Word, anagram.Points);
                 }
             }
 
             Console.WriteLine();
-            anagramsMode();
+            anagramsMode(language);
         }
 
-        static void loadLanguage(string languageCode)
+        static LanguageInfo loadLanguage(string languageCode)
         {
             var languageFactory = new LanguageFactory(new LettersFileReader(), new LexiconFileReader());
-            language = languageFactory.GetLanguage(languageCode);
+            var language = languageFactory.GetLanguage(languageCode);
 
             Console.WriteLine("Loaded language: {0}", language.Code);
             Console.WriteLine("  Lexicon: {0} words loaded", language.Lexicon.Count);
             Console.WriteLine("  Letters: {0} letters loaded", language.Letters.Count);
             Console.WriteLine();
+
+            return language;
         }
     }
 }

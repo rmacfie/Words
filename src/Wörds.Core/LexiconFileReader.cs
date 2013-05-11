@@ -8,7 +8,7 @@
 
     public class LexiconFileReader
     {
-        public IReadOnlyCollection<string> GetLexicon(string filePath)
+        public virtual IReadOnlyCollection<string> GetLexicon(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentException("filePath");

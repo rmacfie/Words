@@ -7,7 +7,7 @@
 
     public class LettersFileReader
     {
-        public IReadOnlyDictionary<char, int> GetLetters(string path)
+        public virtual IReadOnlyDictionary<char, int> GetLetters(string path)
         {
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentException("filePath");

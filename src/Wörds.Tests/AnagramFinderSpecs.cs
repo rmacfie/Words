@@ -12,21 +12,36 @@
 
         Establish context = () =>
         {
-            var lexicon = new List<string> { "baz", "zz", "bar", "foo", "ba", "az" };
-            var letters = new Dictionary<char, int> { { 'a', 1 }, { 'b', 2 }, { 'f', 3 }, { 'o', 4 }, { 'z', 5 } };
+            var lexicon = new List<string> { "baz", "zz", "bar", "foo", "ba", "az", "x" };
+            var letters = new Dictionary<char, int> { { 'a', 1 }, { 'b', 2 }, { 'f', 3 }, { 'o', 4 }, { 'z', 5 }, { 'x', 100 } };
             var language = new LanguageInfo("Test", letters, lexicon);
 
             Subject = new AnagramFinder(language);
         };
 
         Because of = () =>
-            result = Subject.GetTopAnagrams(new[] { 'z', 'a', 'b' }, 2).ToList();
+            result = Subject.GetTopAnagrams(new[] { 'z', 'a', 'b', 'x' }, 2).ToList();
 
-        It should_suggest = () =>
+        It should_filter_out_too_short_words = () =>
+            result.ShouldNotContain(x => x.Word == "x");
+
+        It should_find_the_top_anagrams = () =>
         {
+            result.ShouldContain(x => x.Word == "baz" && x.Points == 8);
+            result.ShouldContain(x => x.Word == "az" && x.Points == 6);
+        };
+
+        It should_limit_the_results = () =>
             result.Count.ShouldEqual(2);
-            result[0].ShouldMatch(x => x.Word == "baz" && x.Value == 8);
-            result[1].ShouldMatch(x => x.Word == "az" && x.Value == 6);
+
+        It should_sort_the_results_descending_by_points = () =>
+        {
+            var prevPoints = int.MaxValue;
+            foreach (var anagram in result)
+            {
+                anagram.Points.ShouldBeLessThanOrEqualTo(prevPoints);
+                prevPoints = anagram.Points;
+            }
         };
     }
 
