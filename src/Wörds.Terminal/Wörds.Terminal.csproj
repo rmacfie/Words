@@ -7,8 +7,8 @@
     <ProjectGuid>{6F64E4EC-22A5-4E7D-A957-F8AD5DAEF98E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wörds.ConsoleApp</RootNamespace>
-    <AssemblyName>Wörds.ConsoleApp</AssemblyName>
+    <RootNamespace>Wörds.Terminal</RootNamespace>
+    <AssemblyName>Wörds.Terminal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

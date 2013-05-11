@@ -1,6 +1,7 @@
 ﻿namespace Wörds.ConsoleApp
 {
     using System;
+    using System.Linq;
 
     internal class Program
     {
@@ -32,22 +33,25 @@
 
         static void anagramsMode()
         {
-            Console.Write("Get top anagrams for: ");
+            Console.Write("Get top 20 anagrams for: ");
             var input = Console.ReadLine();
 
             if (string.IsNullOrEmpty(input))
             {
                 Console.WriteLine("Input was empty. Try again.");
             }
+            else if (!input.All(x => language.Letters.Keys.Contains(x)))
+            {
+                Console.WriteLine("Invalid letter(s) in the input. Try again.");
+            }
             else
             {
                 var anagramFinder = new AnagramFinder(language);
 
-                foreach (var anagram in anagramFinder.GetTopAnagrams(input.ToCharArray(), 10))
+                foreach (var anagram in anagramFinder.GetTopAnagrams(input.ToCharArray(), 20))
                 {
                     Console.WriteLine("  {0} ({1}p)", anagram.Word, anagram.Value);
                 }
-
             }
 
             Console.WriteLine();

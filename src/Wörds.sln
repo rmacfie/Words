@@ -8,11 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1A70E8
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{E9F9A814-15F2-4050-B5F5-DB0B834FB5FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3BF51AE6-9CDA-40E0-B6EA-9EC0EE0819E2}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wörds.Core", "Wörds.Core\Wörds.Core.csproj", "{1F45F81E-9BE1-4F02-958B-34D749E001F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wörds.Tests", "Wörds.Tests\Wörds.Tests.csproj", "{B3D70321-6E33-4C0F-8862-377F466036A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wörds.Terminal", "Wörds.Terminal\Wörds.Terminal.csproj", "{6F64E4EC-22A5-4E7D-A957-F8AD5DAEF98E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wörds.ConsoleApp", "Wörds.ConsoleApp\Wörds.ConsoleApp.csproj", "{6F64E4EC-22A5-4E7D-A957-F8AD5DAEF98E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wörds.Tests", "Wörds.Tests\Wörds.Tests.csproj", "{B3D70321-6E33-4C0F-8862-377F466036A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,5 +39,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6F64E4EC-22A5-4E7D-A957-F8AD5DAEF98E} = {E9F9A814-15F2-4050-B5F5-DB0B834FB5FE}
+		{1F45F81E-9BE1-4F02-958B-34D749E001F7} = {E9F9A814-15F2-4050-B5F5-DB0B834FB5FE}
+		{B3D70321-6E33-4C0F-8862-377F466036A1} = {3BF51AE6-9CDA-40E0-B6EA-9EC0EE0819E2}
 	EndGlobalSection
 EndGlobal

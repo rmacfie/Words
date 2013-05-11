@@ -12,14 +12,8 @@
 
         Establish context = () =>
         {
-            var lexicon = new List<string>
-            {
-                "baz", "zz", "bar", "foo", "ba", "az"
-            };
-            var letters = new List<LetterInfo>
-            {
-                new LetterInfo('a', 1), new LetterInfo('b', 2), new LetterInfo('f', 3), new LetterInfo('o', 4), new LetterInfo('z', 5)
-            };
+            var lexicon = new List<string> { "baz", "zz", "bar", "foo", "ba", "az" };
+            var letters = new Dictionary<char, int> { { 'a', 1 }, { 'b', 2 }, { 'f', 3 }, { 'o', 4 }, { 'z', 5 } };
             var language = new LanguageInfo("Test", letters, lexicon);
 
             Subject = new AnagramFinder(language);

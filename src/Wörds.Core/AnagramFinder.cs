@@ -5,6 +5,8 @@
 
     public class AnagramFinder
     {
+        const int MIN_WORD_LENGTH = 2;
+
         readonly LanguageInfo languageInfo;
 
         public AnagramFinder(LanguageInfo languageInfo)
@@ -12,33 +14,34 @@
             this.languageInfo = languageInfo;
         }
 
-        public IEnumerable<Anagram> GetTopAnagrams(IReadOnlyCollection<char> letters, int maxAnagramCount)
+        public IReadOnlyCollection<Anagram> GetTopAnagrams(IReadOnlyCollection<char> letters, int maxAnagramCount)
         {
             var anagrams = new List<Anagram>();
 
             foreach (var word in languageInfo.Lexicon)
             {
+                if (word.Length < MIN_WORD_LENGTH)
+                    continue;
+
                 if (word.Length > letters.Count)
                     continue;
 
-                var targetLetters = letters.ToList();
+                var rack = letters.ToList();
 
-                foreach (var w in word)
+                foreach (var letter in word)
                 {
-                    if (!targetLetters.Contains(w))
+                    if (!rack.Remove(letter))
                         break;
-
-                    targetLetters.Remove(w);
                 }
 
-                if (targetLetters.Count > letters.Count - word.Length)
+                if (rack.Count > letters.Count - word.Length)
                     continue;
 
                 var value = word.Sum(c => languageInfo.Letters[c]);
                 anagrams.Add(new Anagram(word, value));
             }
 
-            return anagrams.OrderByDescending(x => x.Value).Take(maxAnagramCount);
+            return anagrams.OrderByDescending(x => x.Value).Take(maxAnagramCount).ToList();
         }
     }
 }
