@@ -44,16 +44,21 @@
             }
             else if (!input.All(x => x == AnagramFinder.WILDCARD || language.Letters.Keys.Contains(x)))
             {
-                Console.WriteLine("Invalid letter(s) in the input. Try again.");
+                Console.WriteLine("Invalid character(s) in the input. Try again.");
             }
             else
             {
                 var anagramFinder = new AnagramFinder(language);
+                var foundAny = false;
 
                 foreach (var anagram in anagramFinder.GetTopAnagrams(input.ToCharArray(), 20))
                 {
                     Console.WriteLine("  {0} ({1}p)", anagram.Word, anagram.Points);
+                    foundAny = true;
                 }
+
+                if (!foundAny)
+                    Console.WriteLine("No anagrams found.");
             }
 
             Console.WriteLine();
