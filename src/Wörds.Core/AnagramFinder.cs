@@ -19,41 +19,41 @@
         {
             var anagrams = new List<Anagram>();
 
-            foreach (var word in languageInfo.Lexicon)
+            foreach (var lexiconWord in languageInfo.Lexicon)
             {
-                if (word.Length < MIN_WORD_LENGTH)
+                if (lexiconWord.Length < MIN_WORD_LENGTH)
                     continue;
 
-                if (word.Length > letters.Count)
+                if (lexiconWord.Length > letters.Count)
                     continue;
 
                 var used = new List<char>();
                 var unused = letters.ToList();
 
-                foreach (var letter in word)
+                foreach (var letter in lexiconWord)
                 {
-                    if (unused.Remove(letter))
-                    {
-                        used.Add(letter);
-                    }
-                    else if (unused.Remove(WILDCARD))
-                    {
-                        used.Add(WILDCARD);
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    if (!moveLetter(unused, used, letter))
+                        if (!moveLetter(unused, used, WILDCARD))
+                            break;
                 }
 
-                if (used.Count != word.Length)
+                if (used.Count != lexiconWord.Length)
                     continue;
 
                 var value = used.Where(c => c != WILDCARD).Sum(c => languageInfo.Letters[c]);
-                anagrams.Add(new Anagram(word, value));
+                anagrams.Add(new Anagram(lexiconWord, value));
             }
 
             return anagrams.OrderByDescending(x => x.Points).Take(maxAnagramCount).ToList();
+        }
+
+        static bool moveLetter(ICollection<char> from, ICollection<char> to, char letter)
+        {
+            if (!from.Remove(letter))
+                return false;
+
+            to.Add(letter);
+            return true;
         }
     }
 }

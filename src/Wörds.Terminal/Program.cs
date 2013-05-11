@@ -15,7 +15,11 @@
             try
             {
                 var language = loadLanguage("sv");
-                anagramsMode(language);
+
+                while (true)
+                {
+                    anagramsMode(language);
+                }
             }
             catch (Exception ex)
             {
@@ -23,7 +27,7 @@
                 Console.Write(ex.ToString());
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.Write("A fatal error has occured. ");
+                Console.Write("A fatal error occured. ");
 
                 Environment.Exit(10);
             }
@@ -53,7 +57,6 @@
             }
 
             Console.WriteLine();
-            anagramsMode(language);
         }
 
         static LanguageInfo loadLanguage(string languageCode)

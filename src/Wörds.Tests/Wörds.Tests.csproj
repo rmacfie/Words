@@ -56,7 +56,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AnagramFinderSpecs.cs" />
-    <Compile Include="DictionaryFileReaderSpecs.cs" />
+    <Compile Include="LexiconFileReaderSpecs.cs" />
     <Compile Include="LanguageFactorySpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,7 +70,7 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DictionaryFileReaderTestData1.txt">
+    <Content Include="LexiconFileReaderTestData1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
