@@ -38,7 +38,7 @@
             {
                 Console.WriteLine("Input was empty. Try again.");
             }
-            else if (!input.All(x => language.Letters.Keys.Contains(x)))
+            else if (!input.All(x => x == AnagramFinder.WILDCARD || language.Letters.Keys.Contains(x)))
             {
                 Console.WriteLine("Invalid letter(s) in the input. Try again.");
             }

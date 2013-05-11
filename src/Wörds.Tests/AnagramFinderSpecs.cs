@@ -6,6 +6,26 @@
     using Machine.Fakes.Adapters.FakeItEasy;
     using Machine.Specifications;
 
+    public class When_getting_top_scoring_anagrams_with_wildcard : AnagramFinderSpecs
+    {
+        static List<Anagram> result;
+
+        Establish context = () =>
+        {
+            var lexicon = new List<string> { "ab", "az", "foo", "baz" };
+            var letters = new Dictionary<char, int> { { 'a', 1 }, { 'b', 2 }, { 'f', 3 }, { 'o', 4 }, { 'z', 8 } };
+            var language = new LanguageInfo("Test", letters, lexicon);
+
+            Subject = new AnagramFinder(language);
+        };
+
+        Because of = () =>
+            result = Subject.GetTopAnagrams(new[] { 'a', 'b', '*' }, 2).ToList();
+
+        It should_find_anagrams_using_the_wildcard = () =>
+            result.ShouldContain(x => x.Word == "baz");
+    }
+
     public class When_getting_top_scoring_anagrams : AnagramFinderSpecs
     {
         static List<Anagram> result;
@@ -20,7 +40,7 @@
         };
 
         Because of = () =>
-            result = Subject.GetTopAnagrams(new[] { 'z', 'a', 'b', 'x' }, 2).ToList();
+            result = Subject.GetTopAnagrams(new[] { 'z', 'a', 'b', 'b', 'x' }, 2).ToList();
 
         It should_filter_out_too_short_words = () =>
             result.ShouldNotContain(x => x.Word == "x");

@@ -5,7 +5,8 @@
 
     public class AnagramFinder
     {
-        const int MIN_WORD_LENGTH = 2;
+        public const int MIN_WORD_LENGTH = 2;
+        public const char WILDCARD = '*';
 
         readonly LanguageInfo languageInfo;
 
@@ -26,18 +27,29 @@
                 if (word.Length > letters.Count)
                     continue;
 
-                var rack = letters.ToList();
+                var used = new List<char>();
+                var unused = letters.ToList();
 
                 foreach (var letter in word)
                 {
-                    if (!rack.Remove(letter))
+                    if (unused.Remove(letter))
+                    {
+                        used.Add(letter);
+                    }
+                    else if (unused.Remove(WILDCARD))
+                    {
+                        used.Add(WILDCARD);
+                    }
+                    else
+                    {
                         break;
+                    }
                 }
 
-                if (rack.Count > letters.Count - word.Length)
+                if (used.Count != word.Length)
                     continue;
 
-                var value = word.Sum(c => languageInfo.Letters[c]);
+                var value = used.Where(c => c != WILDCARD).Sum(c => languageInfo.Letters[c]);
                 anagrams.Add(new Anagram(word, value));
             }
 
