@@ -4,8 +4,8 @@
 
     public class LanguageFactory
     {
-        public static string LettersPathPattern = @"C:\Users\RMacfie\Documents\Wörds\data\{0}.letters.txt";
-        public static string LexiconPathPattern = @"C:\Users\RMacfie\Documents\Wörds\data\{0}.lexicon.txt";
+        public static string LettersPathPattern = @"{1}\data\{0}.letters.txt";
+        public static string LexiconPathPattern = @"{1}\data\{0}.lexicon.txt";
 
         readonly LettersFileReader lettersFileReader;
         readonly LexiconFileReader lexiconFileReader;
@@ -21,8 +21,8 @@
             if (string.IsNullOrEmpty(languageCode))
                 throw new ArgumentException("LanguageCode is required.", "languageCode");
 
-            var lettersPath = string.Format(LettersPathPattern, languageCode);
-            var lexiconPath = string.Format(LexiconPathPattern, languageCode);
+            var lettersPath = string.Format(LettersPathPattern, languageCode, Environment.CurrentDirectory);
+            var lexiconPath = string.Format(LexiconPathPattern, languageCode, Environment.CurrentDirectory);
             var letters = lettersFileReader.GetLetters(lettersPath);
             var lexicon = lexiconFileReader.GetLexicon(lexiconPath);
 

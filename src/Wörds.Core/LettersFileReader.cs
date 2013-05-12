@@ -21,8 +21,11 @@
 
                 try
                 {
-                    var letterAndPoint = parseLine(line);
-                    data.Add(letterAndPoint.Key, letterAndPoint.Value);
+                    if (!string.IsNullOrEmpty(line))
+                    {
+                        var letterAndPoint = parseLine(line);
+                        data.Add(letterAndPoint.Key, letterAndPoint.Value);
+                    }
                 }
                 catch (Exception)
                 {
@@ -33,7 +36,7 @@
             return new ReadOnlyDictionary<char, int>(data);
         }
 
-        KeyValuePair<char, int> parseLine(string line)
+        static KeyValuePair<char, int> parseLine(string line)
         {
             var split = line.Split(new[] { ' ', ',', ';', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 

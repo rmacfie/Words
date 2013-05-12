@@ -15,45 +15,55 @@
             this.languageInfo = languageInfo;
         }
 
-        public IReadOnlyCollection<Anagram> GetTopAnagrams(IReadOnlyCollection<char> letters, int maxAnagramCount)
+        public IReadOnlyCollection<Anagram> GetTopAnagrams(IReadOnlyCollection<char> source, int maxAnagramCount)
         {
             var anagrams = new List<Anagram>();
 
             foreach (var lexiconWord in languageInfo.Lexicon)
             {
-                if (lexiconWord.Length < MIN_WORD_LENGTH)
-                    continue;
-
-                if (lexiconWord.Length > letters.Count)
-                    continue;
-
-                var used = new List<char>();
-                var unused = letters.ToList();
-
-                foreach (var letter in lexiconWord)
-                {
-                    if (!moveLetter(unused, used, letter))
-                        if (!moveLetter(unused, used, WILDCARD))
-                            break;
-                }
-
-                if (used.Count != lexiconWord.Length)
-                    continue;
-
-                var value = used.Where(c => c != WILDCARD).Sum(c => languageInfo.Letters[c]);
-                anagrams.Add(new Anagram(lexiconWord, value));
+                matchIntoAnagrams(source, lexiconWord, anagrams);
             }
 
-            return anagrams.OrderByDescending(x => x.Points).Take(maxAnagramCount).ToList();
+            return anagrams
+                .OrderByDescending(x => x.Points)
+                .Take(maxAnagramCount)
+                .ToList();
         }
 
-        static bool moveLetter(ICollection<char> from, ICollection<char> to, char letter)
+        void matchIntoAnagrams(IReadOnlyCollection<char> source, string lexiconWord, ICollection<Anagram> anagrams)
         {
-            if (!from.Remove(letter))
-                return false;
+            if (lexiconWord.Length < MIN_WORD_LENGTH)
+                return;
 
-            to.Add(letter);
-            return true;
+            if (lexiconWord.Length > source.Count)
+                return;
+
+            var unused = source.ToList();
+            var used = new List<char>();
+
+            foreach (var letter in lexiconWord)
+            {
+                if (!unused.Move(letter, used))
+                    if (!unused.Move(WILDCARD, used))
+                        break;
+            }
+
+            if (used.Count != lexiconWord.Length)
+                return;
+
+            var points = getTotalPoints(used);
+            var anagram = new Anagram(lexiconWord, points);
+
+            anagrams.Add(anagram);
+        }
+
+        int getTotalPoints(IEnumerable<char> letters)
+        {
+            var points = letters
+                .Where(c => c != WILDCARD)
+                .Sum(c => languageInfo.Letters[c]);
+
+            return points;
         }
     }
 }

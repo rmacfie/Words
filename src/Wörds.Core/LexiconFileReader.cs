@@ -13,7 +13,10 @@
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentException("filePath");
 
-            var list = File.ReadLines(filePath).ToList();
+            var list = File.ReadLines(filePath)
+                .Where(s => !string.IsNullOrEmpty(s))
+                .ToList();
+
             return new ReadOnlyCollection<string>(list);
         }
     }
