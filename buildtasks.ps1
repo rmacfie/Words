@@ -1,4 +1,4 @@
-Import-Module .\psake.psm1
+ï»¿Import-Module .\psake.psm1
 
 Properties {
     $root_dir = Resolve-Path ".\"
@@ -11,7 +11,7 @@ FormatTaskName (("-"*32) + " {0} " + ("-"*31))
 Task Default -Depends Build
 
 Task Build -Depends Init,Clean {
-    Exec { MSBUILD "$src_dir\Wörds.Terminal\Wörds.Terminal.csproj" /t:Build /p:Configuration=Release /v:Quiet /p:OutDir=$build_dir }
+    Exec { MSBUILD "$src_dir\WÃ¶rds.Terminal\WÃ¶rds.Terminal.csproj" /t:Rebuild /p:Configuration=Release /v:Quiet /p:OutDir=$build_dir }
 }
 
 Task Clean -Depends Init {
